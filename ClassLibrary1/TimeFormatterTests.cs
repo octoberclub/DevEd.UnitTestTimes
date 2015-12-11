@@ -15,7 +15,7 @@ namespace ClassLibrary1
         [Test]
         public void TestClockDisplaysNow()
         {
-            var sut = new NowFormatter();
+            var sut = new NowFormatter(()=>DateTime.Parse("2015-12-04 09:15"));
 
             Assert.That(sut.ToString(), Is.EqualTo("09:15"));
         }
@@ -23,9 +23,16 @@ namespace ClassLibrary1
 
     public class NowFormatter
     {
+        private readonly Func<DateTime> now;
+
+        public NowFormatter(Func<DateTime> now )
+        {
+            this.now = now;
+        }
+
         public override string ToString()
         {
-            return DateTime.Now.ToString("hh:mm");
+            return now().ToString("hh:mm");
         }
     }
 }

@@ -7,13 +7,14 @@ public class TimeoutLogger
 	[Test] public void TestTimer ()
 	{
 	    bool wasCalled=false;
-	    Start(()=>wasCalled=true);
-	    
+	    var t=Start(()=>wasCalled=true);
+	    t.Wait();
+        
         Assert.IsTrue(wasCalled);
 	}
 
-    private void Start(Action a)
+    private Task Start(Action a)
     {
-        Task.Delay(10).ContinueWith((task => a()));
+        return Task.Delay(1000).ContinueWith((task => a()));
     }
 }

@@ -13,15 +13,17 @@ namespace ClassLibrary1
         public async Task TestCalculator()
         {
             var sut = new Calculator();
-            int result= sut.Divide(10, 2);
+            int result= await sut.Divide(10, 2);
             Assert.That(result, Is.EqualTo(5));
         }
     }
 
     internal class Calculator
     {
-        public int Divide(int  numerator, int denominator)
+        public async Task<int> Divide(int  numerator, int denominator)
         {
+            //Long processing
+            await Task.Delay(100);
             return numerator/denominator;
         }
     }
